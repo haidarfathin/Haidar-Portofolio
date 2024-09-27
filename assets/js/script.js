@@ -17,7 +17,7 @@ sidebarBtn.addEventListener("click", function () { elementToggleFunc(sidebar); }
 
 
 // testimonials variables
-const testimonialsItem = document.querySelectorAll("[data-testimonials-item]");
+const testimonialsItem = document.querySelectorAll("[data-project-item]");
 const modalContainer = document.querySelector("[data-modal-container]");
 const modalCloseBtn = document.querySelector("[data-modal-close-btn]");
 const overlay = document.querySelector("[data-overlay]");
@@ -27,31 +27,7 @@ const modalImg = document.querySelector("[data-modal-img]");
 const modalTitle = document.querySelector("[data-modal-title]");
 const modalText = document.querySelector("[data-modal-text]");
 
-// modal toggle function
-const testimonialsModalFunc = function () {
-  modalContainer.classList.toggle("active");
-  overlay.classList.toggle("active");
-}
 
-// add click event to all modal items
-for (let i = 0; i < testimonialsItem.length; i++) {
-
-  testimonialsItem[i].addEventListener("click", function () {
-
-    modalImg.src = this.querySelector("[data-testimonials-avatar]").src;
-    modalImg.alt = this.querySelector("[data-testimonials-avatar]").alt;
-    modalTitle.innerHTML = this.querySelector("[data-testimonials-title]").innerHTML;
-    modalText.innerHTML = this.querySelector("[data-testimonials-text]").innerHTML;
-
-    testimonialsModalFunc();
-
-  });
-
-}
-
-// add click event to modal close button
-modalCloseBtn.addEventListener("click", testimonialsModalFunc);
-overlay.addEventListener("click", testimonialsModalFunc);
 
 
 
@@ -157,3 +133,126 @@ for (let i = 0; i < navigationLinks.length; i++) {
 
   });
 }
+
+
+ const projects = [
+  {
+    imgSrc: "./assets/images/project-2.png",
+    imgAlt: "Orizon",
+    title: "Orizon",
+    category: "Web development",
+    categorySlug: "web development", 
+    tags: ["HTML", "CSS", "API", "BLOC", "RETROFIT"],
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
+  },
+  {
+    imgSrc: "./assets/images/project-3.jpg",
+    imgAlt: "Mobile App Design",
+    title: "Mobile App",
+    category: "Mobile Development",
+    categorySlug: "mobile development",
+    tags: ["FLUTTER", "KOTLIN"],
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
+  },
+  {
+    imgSrc: "./assets/images/project-3.jpg",
+    imgAlt: "Mobile App Design",
+    title: "Mobile App",
+    category: "Mobile Development",
+    categorySlug: "mobile development",
+    tags: ["FLUTTER", "KOTLIN"],
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
+  },
+  {
+    imgSrc: "./assets/images/project-3.jpg",
+    imgAlt: "Mobile App Design",
+    title: "Mobile App",
+    category: "Mobile Development",
+    categorySlug: "mobile development",
+    tags: ["FLUTTER", "KOTLIN"],
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
+  },
+  {
+    imgSrc: "./assets/images/project-3.jpg",
+    imgAlt: "Mobile App Design",
+    title: "Mobile App",
+    category: "Mobile Development",
+    categorySlug: "mobile development",
+    tags: ["FLUTTER", "KOTLIN"],
+    description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
+  },
+]
+
+const projectListContainer = document.getElementById("project-list");
+
+// modal toggle function
+const testimonialsModalFunc = function () {
+  modalContainer.classList.toggle("active");
+  overlay.classList.toggle("active");
+  if (modalContainer.classList.contains("active")) {
+    document.body.style.overflow = 'hidden';  
+  } else {
+    document.body.style.overflow = '';  
+  }
+}
+
+// Fungsi untuk membuka modal ketika item project diklik
+const openProjectModal = function (projectItem) {
+  modalImg.src = projectItem.querySelector("[data-project-img-src]").src;
+  modalImg.alt = projectItem.querySelector("[data-project-img-src]").alt;
+  modalTitle.innerHTML = projectItem.querySelector("[data-project-title]").innerHTML;
+  modalText.innerHTML = projectItem.querySelector("[data-project-description]").innerHTML;
+
+  testimonialsModalFunc();
+};
+
+// Tambahkan click event pada elemen project-item statis
+for (let i = 0; i < testimonialsItem.length; i++) {
+  testimonialsItem[i].addEventListener("click", function () {
+    openProjectModal(this);
+  });
+}
+
+// Add click event to modal close button
+modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+overlay.addEventListener("click", testimonialsModalFunc);
+
+// Tambahkan project-item dinamis dan tambahkan event listener
+projects.forEach((project) => {
+  const projectItem = document.createElement("li");
+  projectItem.classList.add("project-item", "active");
+  projectItem.setAttribute("data-filter-item", "");
+  projectItem.setAttribute("data-category", project.categorySlug);
+  projectItem.setAttribute("data-project-item", "");
+
+  const tagsHtml = project.tags.map(tag => `<p class="tag">${tag}</p>`).join("");
+
+  projectItem.innerHTML = `
+    <a href="#">
+      <figure class="project-img" data-project-img>
+        <div class="project-item-icon-box">
+          <ion-icon name="eye-outline"></ion-icon>
+        </div>
+        <img
+          src="${project.imgSrc}"
+          alt="${project.imgAlt}"
+          loading="lazy"
+          data-project-img-src
+        />
+      </figure>
+      <h3 class="project-title" data-project-title>${project.title}</h3>
+      <p class="project-category" data-project-category>${project.category}</p>
+      <p style="display:none;" data-project-description>${project.description}</p>
+      <div class="project-tags">${tagsHtml}</div>
+    
+    </a>
+  `;
+
+  // Tambahkan project-item ke dalam container <ul>
+  projectListContainer.appendChild(projectItem);
+
+  // Tambahkan event listener ke setiap item project yang baru dibuat
+  projectItem.addEventListener("click", function () {
+    openProjectModal(this);
+  });
+});

@@ -333,7 +333,19 @@ main {
 
 .avatar-box {
   background: var(--bg-gradient-onyx);
-  border-radius: 20px;
+  border-radius: 50%;        /* Membuat elemen menjadi lingkaran */
+  width: 100px;              /* Lebar awal elemen */
+  height: 100px;             /* Tinggi awal elemen, sama dengan lebar */
+  overflow: hidden;          /* Memastikan gambar tidak keluar dari area lingkaran */
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.avatar-box img {
+  width: 100%;               /* Gambar akan memenuhi lebar avatar box */
+  height: 100%;              /* Gambar akan memenuhi tinggi avatar box */
+  object-fit: cover;         /* Menjaga proporsi gambar saat dicrop */
 }
 
 .info-content .name {
@@ -703,7 +715,10 @@ main {
   box-shadow: var(--shadow-2);
 }
 
-.modal-img-wrapper > img { display: none; }
+.modal-img-wrapper > img { 
+  display: none; 
+  border-radius: 14px;
+}
 
 .modal-title { margin-bottom: 4px; }
 
@@ -714,12 +729,13 @@ main {
   margin-bottom: 10px;
 }
 
-.modal-content p {
+.modal-content > .modal-desc {
   color: var(--light-gray);
   font-size: var(--fs-6);
   font-weight: var(--fw-300);
   line-height: 1.6;
 }
+
 
 
 /**
@@ -785,6 +801,11 @@ main {
   margin-left: 45px;
 }
 
+.timeline .timeline-item-subtitle {
+  font-weight:400;
+  margin-bottom: 15px;
+}
+
 .timeline-item { position: relative; }
 
 .timeline-item:not(:last-child) { margin-bottom: 20px; }
@@ -798,7 +819,7 @@ main {
 .timeline-list span {
   color: var(--vegas-gold);
   font-weight: var(--fw-400);
-  line-height: 1.6;
+  line-height: 1.2;
 }
 
 .timeline-item:not(:last-child)::before {
@@ -823,11 +844,23 @@ main {
   box-shadow: 0 0 0 4px var(--jet);
 }
 
+.timeline-education-item {
+  margin-top: 20px;
+}
+.timeline-education-item p{
+  color: white;
+  margin-bottom: 10px;
+  font-weight: 300;
+
+}
 .timeline-text {
+  margin-top: 10px;
   color: var(--light-gray);
   font-weight: var(--fw-300);
-  line-height: 1.6;
+  line-height: 1.8;
 }
+
+
 
 
 /**
@@ -946,6 +979,24 @@ main {
   animation: scaleUp 0.25s ease forwards;
 }
 
+.tag {
+  display: inline-block;   
+  background-color: var(--orange-yellow-crayola); 
+  color: var(--smoky-black);
+  font-weight: 600;            
+  padding: 4px 8px;       
+  margin: 5px;             
+  border-radius: 25px;     
+  font-size: 12px;         
+}
+
+.project-tags {
+  display: flex;           
+  flex-wrap: wrap; 
+  margin-top: 10px;
+}
+
+
 @keyframes scaleUp {
   0% { transform: scale(0.5); }
   100% { transform: scale(1); }
@@ -1026,6 +1077,53 @@ main {
   font-weight: var(--fw-300);
 }
 
+/* btn github */
+/* From Uiverse.io by kamehame-ha */ 
+.btn-github {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 8px 12px;
+  gap: 15px;
+  background-color: #181717;
+  outline: 3px #181717 solid;
+  outline-offset: -3px;
+  border-radius: 10px;
+  border: none;
+  cursor: pointer;
+  transition: 400ms;
+}
+
+.btn-github p {
+  color: white;
+  font-weight: 700;
+  font-size: 12px;
+  transition: 400ms;
+}
+
+.btn-github svg path {
+  transition: 400ms;
+}
+
+.btn-github:hover {
+  background-color: var(--light-gray);
+}
+
+.btn-github:hover p {
+  color: #181717;
+}
+
+.btn-github:hover svg path {
+  fill: #181717;
+}
+
+.button-wrapper {
+  flex-grow: 1; 
+  display: flex; 
+  justify-content: center; 
+  align-items: center; 
+  width: 100%;
+}
 
 
 
@@ -1232,6 +1330,20 @@ textarea.form-input::-webkit-resizer { display: none; }
 /**
  * responsive larger than 450px screen
  */
+@media (max-width: 450px) {
+  .sidebar{ 
+    max-height: 130px;
+  }
+  .modal-avatar-box img {
+    border-radius: 10px;
+  }
+  .button-wrapper {
+    padding-bottom: 10px;
+    justify-content: start; 
+    align-items: start;
+  }
+}
+
 
 @media (min-width: 450px) {
 
@@ -1337,9 +1449,10 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .sidebar-info { gap: 25px; }
 
-  .avatar-box { border-radius: 30px; }
-
-  .avatar-box img { width: 120px; }
+  .avatar-box {
+    width: 120px;
+    height: 120px;           /* Sesuaikan tinggi dan lebar dengan proporsi yang sama */
+  }
 
   .info-content .name { margin-bottom: 15px; }
 
@@ -1463,13 +1576,18 @@ textarea.form-input::-webkit-resizer { display: none; }
     margin-bottom: 0;
   }
 
-  .modal-avatar-box img { width: 65px; }
+  .modal-avatar-box img { 
+    width: 300px !important; 
+    border-radius: 14px;
+  }
 
   .modal-img-wrapper > img {
     display: block;
     flex-grow: 1;
-    width: 35px;
+    width: 300px;
   }
+
+ 
 
   /* clients */
 
@@ -1591,7 +1709,9 @@ textarea.form-input::-webkit-resizer { display: none; }
     max-width: 680px;
   }
 
-  .modal-avatar-box img { width: 80px; }
+  .modal-avatar-box img { width: 80px; 
+    border-radius: 10px;
+  }
 
 
 
@@ -1834,8 +1954,12 @@ textarea.form-input::-webkit-resizer { display: none; }
   }
 
   .sidebar-info { flex-direction: column; }
-
-  .avatar-box img { width: 150px; }
+/* 
+  .avatar-box img { width: 150px; } */
+  .avatar-box {
+    width: 150px;
+    height: 150px;           /* Sesuaikan tinggi dan lebar dengan proporsi yang sama */
+  }
 
   .info-content .name {
     white-space: nowrap;
