@@ -1330,13 +1330,25 @@ textarea.form-input::-webkit-resizer { display: none; }
 /**
  * responsive larger than 450px screen
  */
-@media (max-width: 450px) {
+
+ @media (max-width: 400px) {
+  .modal-avatar-box img {
+    border-radius: 10px;
+  }
+  .button-wrapper {
+    padding-bottom: 10px;
+    justify-content: start; 
+    align-items: start;
+  }
+ }
+
+@media (min-width: 400px) {
   .sidebar{ 
     max-height: 130px;
   }
   .modal-avatar-box img {
     border-radius: 10px;
-    min-width: auto;
+    min-width: 250px;
   }
   .button-wrapper {
     padding-bottom: 10px;
@@ -1355,16 +1367,16 @@ textarea.form-input::-webkit-resizer { display: none; }
   .clients-item { min-width: calc(33.33% - 10px); }
 
 
-  .modal-avatar-box img {
-    border-radius: 10px;
-    max-width:200px;
-    min-width: 350px;
-  }
 
   .button-wrapper {
     padding-bottom: 10px;
     justify-content: start; 
     align-items: start;
+  }
+  .modal-avatar-box img {
+    border-radius: 10px;
+    max-width:200px;
+    min-width: 350px;
   }
 
   /**
