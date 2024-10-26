@@ -1897,6 +1897,13 @@ textarea.form-input::-webkit-resizer { display: none; }
 
   .project-list { grid-template-columns: repeat(3, 1fr); }
 
+  .img-project {
+    width: 100%; /* Sesuaikan sesuai ukuran container */
+    aspect-ratio: 16 / 9; /* Ganti dengan rasio yang diinginkan */
+    object-fit: cover; /* Agar gambar tetap proporsional */
+    border-radius: 8px; /* Opsional: untuk sudut yang lebih halus */
+  }
+  
 
 
   /**
