@@ -1335,6 +1335,9 @@ textarea.form-input::-webkit-resizer { display: none; }
   .modal-avatar-box img {
     border-radius: 10px;
   }
+  .sidebar {
+    max-height: 130px;
+  }
   .button-wrapper {
     padding-bottom: 10px;
     justify-content: start; 
