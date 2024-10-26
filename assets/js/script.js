@@ -34,7 +34,7 @@ const modalText = document.querySelector("[data-modal-text]");
 // custom select variables
 const select = document.querySelector("[data-select]");
 const selectItems = document.querySelectorAll("[data-select-item]");
-const selectValue = document.querySelector("[data-selecct-value]");
+const selectValue = document.querySelector("[data-select-value]");
 const filterBtn = document.querySelectorAll("[data-filter-btn]");
 
 select.addEventListener("click", function () { elementToggleFunc(this); });
@@ -213,7 +213,7 @@ for (let i = 0; i < navigationLinks.length; i++) {
     imgAlt: "Cozy App Flutter",
     title: "Cozy App Flutter",
     category: "Flutter",
-    categorySlug: "flutter",
+    categorySlug: "mobile",
     tags: ["Flutter","UI"],
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
   },
@@ -222,26 +222,26 @@ for (let i = 0; i < navigationLinks.length; i++) {
     imgAlt: "HR App Flutter",
     title: "HR App Flutter",
     category: "Flutter",
-    categorySlug: "flutter",
+    categorySlug: "mobile",
     tags: ["Flutter", "BLoC", "RestAPI", "Firebase Notification"],
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
   },
   {
     imgSrc: "./assets/images/projects/jaheet_flutter.png",
     imgAlt: "Jaheet Flutter",
-    title: "APlikasi Marketplace Penjahit",
+    title: "Jaheet: Marketplace Penjahit",
     category: "Flutter",
-    categorySlug: "flutter",
+    categorySlug: "mobile",
     tags: ["Flutter", "Provider", "GMaps API"],
     description: "Lorem ipsum dolor sit amet, consectetur adipiscing elit. Pellentesque libero risus, sodales vitae consequat mollis, ornare ac mauris. Etiam fringilla faucibus laoreet. Ut in sapien gravida, consequat quam eget, facilisis nulla. Curabitur ut elit odio. Ut malesuada at eros sed accumsan. Pellentesque eu blandit ante. Nullam sem mauris, interdum et.",
   },
   {
     imgSrc: "./assets/images/projects/nutrisee.png",
     imgAlt: "Nutrisee Flutter",
-    title: "",
+    title: "Nutrisee: Aplikasi penilaian nutrisi",
     category: "Flutter",
-    categorySlug: "flutter",
-    tags: ["Flutter", "Optical Character Recognition", "Gemini API", "AI", "Firebase"],
+    categorySlug: "mobile",
+    tags: ["Flutter", "OCR", "Gemini API", "AI", "Firebase"],
     description: "Aplikasi Penilai Nutrisi Makanan dan Minuman Kemasan berbasis OCR. Berhasil memenangkan juara 2 sebagai aplikasi inovatif KMIPN 6 2024 dan lolos pendanaan PKM 2024. Menggabungkan teknologi AI kedalam aplikasi Android dengan Flutter untuk menilai kandungan nutrisi produk makanan dan minuman kemasan sebagai tolak ukur konsumsi pelanggan.",
   },
 ]
@@ -280,13 +280,59 @@ for (let i = 0; i < testimonialsItem.length; i++) {
 modalCloseBtn.addEventListener("click", testimonialsModalFunc);
 overlay.addEventListener("click", testimonialsModalFunc);
 
-// Tambahkan project-item dinamis dan tambahkan event listener
+
+
+// Get DOM elements
+
+const filterBtns = document.querySelectorAll("[data-filter-btn]");
+
+
+// Function to filter projects
+const filterProjects = (category) => {
+  const projectItems = document.querySelectorAll("[data-filter-item]");
+  
+  projectItems.forEach(item => {
+    if (category === "All" || item.dataset.category === category.toLowerCase()) {
+      item.classList.add("active");
+    } else {
+      item.classList.remove("active");
+    }
+  });
+};
+
+// Add click event to filter buttons
+filterBtns.forEach(btn => {
+  btn.addEventListener("click", function() {
+    // Remove active class from other buttons
+    filterBtns.forEach(otherBtn => otherBtn.classList.remove("active"));
+    // Add active class to clicked button
+    this.classList.add("active");
+    // Filter projects
+    filterProjects(this.textContent);
+  });
+});
+
+// Add click event to select items (for mobile dropdown)
+selectItems.forEach(item => {
+  item.addEventListener("click", function() {
+    const selectedValue = this.textContent;
+    document.querySelector("[data-select-value]").textContent = selectedValue;
+    filterProjects(selectedValue);
+  });
+});
+
+// Modal toggle function
+
+// Add click event to modal close button and overlay
+modalCloseBtn.addEventListener("click", testimonialsModalFunc);
+overlay.addEventListener("click", testimonialsModalFunc);
+
+// Create and render project items
 projects.forEach((project) => {
   const projectItem = document.createElement("li");
   projectItem.classList.add("project-item", "active");
   projectItem.setAttribute("data-filter-item", "");
   projectItem.setAttribute("data-category", project.categorySlug);
-  projectItem.setAttribute("data-project-item", "");
 
   const tagsHtml = project.tags.map(tag => `<p class="tag">${tag}</p>`).join("");
 
@@ -308,14 +354,13 @@ projects.forEach((project) => {
       <p class="project-category" data-project-category>${project.category}</p>
       <p style="display:none;" data-project-description>${project.description}</p>
       <div class="project-tags">${tagsHtml}</div>
-    
     </a>
   `;
 
-  // Tambahkan project-item ke dalam container <ul>
+  // Add project item to container
   projectListContainer.appendChild(projectItem);
 
-  // Tambahkan event listener ke setiap item project yang baru dibuat
+  // Add click event for modal
   projectItem.addEventListener("click", function () {
     openProjectModal(this);
   });
